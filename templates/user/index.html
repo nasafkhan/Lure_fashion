@@ -148,13 +148,14 @@
                     <div class="tab-pane p-0 fade show active" id="new-women-tab" role="tabpanel" aria-labelledby="new-women-link">
                         <div class="products">
                             <div class="row justify-content-center">
+                                {% for product in products %}
                                 <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-sale">Sale</span>
                                             <a href="product.html">
-                                                <img src="{% static 'images/products/product-8.jpg' %}" alt="Product image" class="product-image">
-                                                <img src="{% static 'images/products/product-8.jpg' %}" alt="Product image" class="product-image-hover">
+                                                <img src="{{ product.image1.url }}" alt="Product image" class="product-image">
+                                                <img src="{{ product.image1.url }}" alt="Product image" class="product-image-hover">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -168,10 +169,10 @@
                                         </figure><!-- End .product-media -->
 
                                         <div class="product-body">
-                                            <h3 class="product-title"><a href="product.html">Tie-detail top</a></h3><!-- End .product-title -->
+                                            <h3 class="product-title"><a href="product.html">{{ product.product_name }}</a></h3><!-- End .product-title -->
                                             <div class="product-price">
-                                                <span class="new-price">$50.00</span>
-                                                <span class="old-price">$84.00</span>
+                                                <span class="new-price">${{ product.price }}</span>
+                                                <span class="old-price">${{ product.price }}</span>
                                             </div><!-- End .product-price -->
                                             <div class="ratings-container">
                                                 <div class="ratings">
@@ -182,75 +183,7 @@
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
                                 </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                                <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                                    <div class="product product-7 text-center">
-                                        <figure class="product-media">
-                                            <a href="product.html">
-                                                <img src="{% static 'images/products/product-8.jpg' %}" alt="Product image" class="product-image">
-                                                <img src="{% static 'images/products/product-8.jpg' %}" alt="Product image" class="product-image-hover">
-                                            </a>
-
-                                            <div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                                <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                            </div><!-- End .product-action-vertical -->
-
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
-
-                                        <div class="product-body">
-                                            <h3 class="product-title"><a href="product.html">Dress with a belt</a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                               $120.99
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 2 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                                <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                                    <div class="product product-7 text-center">
-                                        <figure class="product-media">
-                                            <a href="product.html">
-                                                <img src="{% static 'images/products/product-8.jpg' %}" alt="Product image" class="product-image">
-                                                <img src="{% static 'images/products/product-8.jpg' %}" alt="Product image" class="product-image-hover">
-                                            </a>
-
-                                            <div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                                <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                            </div><!-- End .product-action-vertical -->
-
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
-
-                                        <div class="product-body">
-                                            <h3 class="product-title"><a href="product.html">Linen-blend paper bag trousers</a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                                $60.00
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 2 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                            <div class="product-nav product-nav-dots">
-                                                <a href="#" class="active" style="background: #d5ad81;"><span class="sr-only">Color name</span></a>
-                                                <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                            </div><!-- End .product-nav -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                                
+                                {% endfor %}    
                             </div><!-- End .row -->
                         </div><!-- End .products -->
                     </div><!-- .End .tab-pane -->
