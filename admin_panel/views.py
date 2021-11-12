@@ -6,15 +6,12 @@ from accounts.models import Account
 
 # Create your views here.
 def dashboard(request):
-    products   = Product.objects.all()
-    brands     = Brand.objects.all()
-    categories = Category.objects.all()
-    users      = Account.objects.all()
+    return render(request, 'adminpanel/dashboard.html')
+
+def active_users(request):
+    users   = Account.objects.all()
 
     context = {
-        'products'   : products,
-        'brands'     : brands,
-        'categories' : categories,
-        'users'      : users
+        'users' : users
     }
-    return render(request, 'adminpanel/dashboard.html', context)
+    return render(request, 'adminpanel/all_users_table.html', context)
