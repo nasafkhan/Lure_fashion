@@ -38,6 +38,7 @@
    
     <!-- Argon CSS -->
 
+    <link rel="stylesheet" href="{% static 'css/cards.css' %}">
     <link
       rel="stylesheet"
       href="{% static 'css/adminargon.min23cd.css' %}"
@@ -108,7 +109,7 @@
                 <div class="collapse" id="navbar-tables">
                   <ul class="nav nav-sm flex-column">
                     <li class="nav-item">
-                      <a href="{% url 'all_users' %}" class="nav-link">
+                      <a href="{% url 'active_users' %}" class="nav-link">
                         <span class="sidenav-mini-icon"></span>
                         <span class="sidenav-normal"> Active users </span>
                       </a>
@@ -137,13 +138,13 @@
                 <div class="collapse" id="navbar-examples">
                   <ul class="nav nav-sm flex-column">
                     <li class="nav-item">
-                      <a href="" class="nav-link">
+                      <a href="{% url 'all_products' %}" class="nav-link">
                         <span class="sidenav-mini-icon"></span>
                         <span class="sidenav-normal">All products</span>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="" class="nav-link">
+                      <a href="{% url 'add_product' %}" class="nav-link">
                         <span class="sidenav-mini-icon"></span>
                         <span class="sidenav-normal">Add new product</span>
                       </a>
@@ -166,7 +167,7 @@
                 <div class="collapse" id="navbar-components">
                   <ul class="nav nav-sm flex-column">
                     <li class="nav-item">
-                      <a href="" class="nav-link">
+                      <a href="{% url 'all_brands' %}" class="nav-link">
                         <span class="sidenav-mini-icon"></span>
                         <span class="sidenav-normal">All brands</span>
                       </a>
@@ -195,7 +196,7 @@
                 <div class="collapse" id="navbar-forms">
                   <ul class="nav nav-sm flex-column">
                     <li class="nav-item">
-                      <a href="" class="nav-link">
+                      <a href="{% url 'all_categories' %}" class="nav-link">
                         <span class="sidenav-mini-icon"></span>
                         <span class="sidenav-normal">All categories</span>
                       </a>

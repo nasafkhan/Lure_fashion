@@ -1,0 +1,33 @@
+{% extends 'adminpanel/base.html' %} {% block content %}
+
+
+<div class="container">
+  <div class="row">
+    {% for category in categories %}
+    <div class="col-sm-3">
+      <div class="box-container">
+        <div class="box-img">
+          {% if category.category_image %}
+          <img src="{{category.category_image.url}}" />
+          {% else %} {{category.category_name}} {% endif %}
+        </div>
+        <h4 class="box-title">{{category.category_name}}</h4>
+        <div class="box-heading">{{category.category_offer}}</div>
+        <div class="container">
+            <div class="row justify-content-sm-around">
+                <div class="box-btns">
+                  <a class="btn btn-primary text-white">Edit</a>
+                </div>
+                <div class="box-btns">
+                  <a class="btn btn-danger text-white">Delete</a>
+                </div>
+              </div>
+        </div>
+        <div class="box-id"></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
