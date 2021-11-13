@@ -1,33 +1,17 @@
 {%  extends 'adminpanel/base.html' %}
+{% load crispy_forms_tags %} 
+{% load crispy_forms_filters %} 
+
 {% block content %}
-
- 
-
-        
-        <div class="container">
+        <div class="container p-5 col-6">
+          {% include "includes/messages.html" %}
           <!--Django Model Form-->
-          <h2 class="my-4">Add a new product</h2>
-          <form method="post" enctype="multipart/form-data">
+          <h2 class="my-4 mb-4 text-center">Add a new product</h2>
+          <form method="POST"  action="{% url 'add_product' %}"  enctype="multipart/form-data">
             {% csrf_token %}
-                {{product_form}}
+                {{form|crispy}}
                 <button class="btn btn-primary my-4" type="submit">Submit</button>
           </form>
-          <!--Django Model-->
-          <!-- <h2 class="my-4">Movies</h2>
-          <div class="row">
-            {% for m in movies %}
-            <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-              <div class="card h-100 p-4">
-                <img src="{{ m.movie_poster.url }}" class="card-img-top" alt="{{ m.movie_title}}">
-                <h4>{{m.movie_title}}</h4>
-                <p class="text-muted">{{m.release_year}} | {{m.director}}</p>
-                <p>{{m.movie_plot}}</p>
-              </div>
-            </div>
-            {% empty %}
-            <p>No movies added.</p>
-            {% endfor %}
-          </div> -->
         </div>
 
 {% endblock %}

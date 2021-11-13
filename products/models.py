@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from category.models import Category
 from brands.models import Brand
@@ -5,7 +6,7 @@ from brands.models import Brand
 # Create your models here.
 class Product(models.Model):
     product_name = models.CharField(max_length=100, unique=True)
-    slug         = models.SlugField(max_length=100, unique=True)
+    slug         = models.SlugField(max_length=100, unique=True, default=uuid.uuid1)
     description  = models.TextField(max_length=500, blank=True)
     price        = models.IntegerField(null=True)
     image1       = models.ImageField(upload_to='photos/products',)

@@ -27,15 +27,21 @@ def all_products(request):
     return render(request, 'adminpanel/products/all_products.html', context)
 
 def add_product(request):
+    form = ProductForm()
     if request.method == "POST":
-        product_form = ProductForm(request.POST, request.files)
+        product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
             product_form.save()
             messages.success(request, 'Product added successfully')
         else:
+
             messages.error(request, 'Form submission failed')
-        return redirect("adminpanel:add_product")
-    return render(request, 'adminpanel/products/add_product.html')
+        return redirect("add_product")
+    context = {
+        'form': form
+    }
+
+    return render(request, 'adminpanel/products/add_product.html', context )
 
 
 def all_brands(request):
