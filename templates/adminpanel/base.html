@@ -11,10 +11,7 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-  <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-  <script src="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"></script>
-  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> -->
-  <!-- <script src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script> -->
+
     <!-- Favicon -->
     <link rel="icon" href="" type="image/png" />
     <!-- Fonts -->
@@ -23,14 +20,10 @@
       href="{% static 'fonts/fonts.googleapis.com/cssff98.css?family=Open+Sans:300,400,600,700' %}"
     />
     <!-- Icons -->
+    <script src="https://kit.fontawesome.com/2f662670f2.js" crossorigin="anonymous"></script>
     <link
       rel="stylesheet"
       href="{% static 'css/adminvendor/nucleo/css/nucleo.css' %}"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'css/adminvendor/%40fortawesome/fontawesome-free/css/all.min.css' %}"
       type="text/css"
     />
     <!-- Page plugins -->
@@ -86,12 +79,12 @@
               <li class="nav-item">
                 <a
                   class="nav-link active"
-                  href="#navbar-dashboards"
+                  href="{% url 'dashboard' %}"
                   role="button"
                   aria-expanded="true"
                   aria-controls="navbar-dashboards"
                 >
-                  <i class="ni ni-shop text-primary"></i>
+                <i class="fas fa-home text-primary"></i>
                   <span class="nav-link-text">Dashboard</span>
                 </a>
               </li>
@@ -104,7 +97,7 @@
                   aria-expanded="false"
                   aria-controls="navbar-tables"
                 >
-                  <i class="ni ni-align-left-2 text-default"></i>
+                <i class="fas fa-users text-default"></i>
                   <span class="nav-link-text">User management</span>
                 </a>
                 <div class="collapse" id="navbar-tables">
@@ -133,7 +126,7 @@
                   aria-expanded="false"
                   aria-controls="navbar-examples"
                 >
-                  <i class="ni ni-single-02 text-orange"></i>
+                  <i class="fas fa-store-alt text-orange"></i>
                   <span class="nav-link-text">Product management</span>
                 </a>
                 <div class="collapse" id="navbar-examples">
@@ -174,7 +167,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="" class="nav-link">
+                      <a href="{% url 'add_brand' %}" class="nav-link">
                         <span class="sidenav-mini-icon"></span>
                         <span class="sidenav-normal">Add new brand</span>
                       </a>
@@ -203,7 +196,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="" class="nav-link">
+                      <a href="{% url 'add_category' %}" class="nav-link">
                         <span class="sidenav-mini-icon"></span>
                         <span class="sidenav-normal">Add new category</span>
                       </a>
@@ -345,7 +338,7 @@
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  href="https://demos.creative-tim.com/argon-dashboard-pro/docs/getting-started/overview.html"
+                  href=""
                   target="_blank"
                 >
                   <i class="ni ni-spaceship"></i>
