@@ -1,0 +1,19 @@
+{%  extends 'adminpanel/base.html' %}
+{% load crispy_forms_tags %} 
+{% load crispy_forms_filters %} 
+ 
+
+{% block content %}
+        <div class="container p-5 col-6">
+          {% include "includes/messages.html" %}
+          <!--Django Model Form-->
+          <h2 class="my-4 mb-4 text-center">Edit Brand</h2>
+          <form method="POST"  action="" enctype="multipart/form-data" >
+            {% csrf_token %}
+                {{form|crispy}}
+                <button class="btn btn-primary my-4" type="submit">Update</button>
+                <a href="{% url 'all_brands' %}" class="btn btn-secondary btn-round">Cancel</a>
+          </form>
+        </div>
+
+{% endblock %}
