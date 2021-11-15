@@ -1,65 +1,85 @@
-{% extends 'user/base.html' %}
 {% load static %}
-
-{% block title %} Admin Login {% endblock%}
-{% block content %}
-    <div class="page-wrapper">
-        <main class="main">
-            <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
-            	<div class="container">
-            		<div class="form-box">
-            			<div class="form-tab">
-	            			<ul class="nav nav-pills nav-fill" role="tablist">
-							    <li class="nav-item">
-							        <a class="nav-link" id="signin-tab-2" data-toggle="tab" role="tab" aria-controls="signin-2" aria-selected="false">Sign In</a>
-							    </li>
-							</ul>
-							<div class="tab-content">
-								{% include "includes/messages.html" %}
-							    <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
-							    	<form action="{% url 'admin_login' %}" method="POST">
-										{% csrf_token %}
-							    		<div class="form-group">
-							    			<label for="register-email-2">Your email address *</label>
-							    			<input type="email" class="form-control" id="register-email-2" name="email" required>
-							    		</div><!-- End .form-group -->
-
-							    		<div class="form-group">
-							    			<label for="register-password-2">Password *</label>
-							    			<input type="password" class="form-control" id="register-password-2" name="password" required>
-							    		</div><!-- End .form-group -->
-							    		<div class="form-footer">
-							    			<button type="submit" class="btn btn-outline-primary-2">
-			                					<span>Login</span>
-			            						<i class="icon-long-arrow-right"></i>
-			                				</button>
-							    		</div><!-- End .form-footer -->
-							    	</form>
-							    	<!-- <div class="form-choice">
-								    	<p class="text-center">or sign in with</p>
-								    	<div class="row">
-								    		<div class="col-sm-6">
-								    			<a href="#" class="btn btn-Sign In btn-g">
-								    				<i class="icon-google"></i>
-								    				Sign In With Google
-								    			</a>
-								    		</div>
-								    		<div class="col-sm-6">
-								    			<a href="#" class="btn btn-login  btn-f">
-								    				<i class="icon-facebook-f"></i>
-								    				Sign In With Facebook
-								    			</a>
-								    		</div>
-								    	</div>
-							    	</div> -->
-							    </div><!-- .End .tab-pane -->
-							</div><!-- End .tab-content -->
-						</div><!-- End .form-tab -->
-            		</div><!-- End .form-box -->
-            	</div><!-- End .container -->
-            </div><!-- End .login-page section-bg -->
-        </main><!-- End .main -->
-    </div><!-- End .page-wrapper -->
-{% endblock %}
-{% block script %}{% endblock %}
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Admin Login</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+      .login-form {
+        width: 340px;
+        margin: 50px auto;
+        font-size: 15px;
+      }
+      .login-form form {
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+      }
+      .login-form h2 {
+        margin: 0 0 15px;
+      }
+      .form-control,
+      .btn {
+        min-height: 38px;
+        border-radius: 2px;
+      }
+      .btn {
+        font-size: 15px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="{% static 'images/undraw_remotely_2j6y.svg' %}" alt="Image" class="img-fluid" />
+          </div>
+          <div class="col-md-6 mt-5">
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <div class="mb-4 text-center">
+                <h3>Admin Login</h3>
+              </div>
+              <div class="container">
+                {% include "includes/messages.html" %}
+                <form action="{% url 'admin_login' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="form-group mb-5">
+                    <label for="register-email-2">Your email address *</label>
+                    <input type="email" class="form-control" id="register-email-2" name="email" required>
+                  <div class="form-group mt-3">
+                    <label for="register-password-2">Password *</label>
+                    <input type="password" class="form-control" id="register-password-2" name="password" required>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-outline-primary btn-block">
+                      Login
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

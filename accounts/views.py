@@ -3,16 +3,14 @@ from django.contrib import messages, auth
 from accounts.forms import SignupForm
 from accounts.models import Account
 from .verification_otp import sendOTP, checkOTP
-from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 
 
 def sign_in(request):
-    
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-
         user = auth.authenticate(email=email, password=password)
         if user is not None:
             auth.login(request, user)
@@ -24,9 +22,9 @@ def sign_in(request):
 
 def sign_in_with_OTP(request):
     if request.method == 'POST':
-        mobile = request.POST['phone']
+        mobile = request.POST['mobile']
         try:
-            if Account.objects.get(phone_number = mobile).exist():
+            if Account.objects.get(phone = mobile).exist():
                 sendOTP(mobile)
                 request.session['has_mobile'] = mobile
                 return redirect('verify_otp')
@@ -40,12 +38,15 @@ def verify_otp(request):
         mobile = request.session['has_mobile']
         otp_value = checkOTP(mobile,get_otp)
         if otp_value:
+            user=Account.objects.get(phone=mobile)
+            auth.login(request,user)
             return redirect('home')
         else:
             messages.error(request, 'OTP is not valid please try again')
             return 
         
     return render(request, 'user/otp_verify.html')
+
 
 def sign_up(request):
     if request.method == 'POST':
@@ -60,7 +61,7 @@ def sign_up(request):
             user = Account.objects.create_user(first_name = first_name, last_name = last_name,username = user_name,email = email,phone=phone, password = password)
             user.save()
             messages.success(request, 'Registration Successful.')
-            return redirect('sign-up')
+            return redirect('home')
     else:
         form = SignupForm()
     context = {
@@ -68,28 +69,24 @@ def sign_up(request):
     }
     return render(request, 'user/sign-up.html', context)
 
-@login_required(login_url = 'sign-in')
+
 def logout(request):
     auth.logout(request)
     messages.success(request, 'You are logged out.')
     return redirect('sign-in')
 
 
-
 def admin_login(request):
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect ('dashboard')
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-
         user = auth.authenticate(email=email, password=password)
-        
-        if user is not None:
-            
 
+        if user is not None:
             if user.is_superuser:
-                auth.login(request, user)
+                auth.login(request,user)
                 return redirect('dashboard')
             else:
                 messages.info(request, 'You are not an admin')
@@ -101,3 +98,13 @@ def admin_login(request):
 
     else:
         return render(request,'adminpanel/admin_login.html')
+
+
+@staff_member_required(login_url='access_denied')
+def admin_logout(request):
+    auth.logout(request)
+    return redirect('admin_login')
+
+
+def access_denied(request):
+    return render(request, 'adminpanel/access_denied.html')

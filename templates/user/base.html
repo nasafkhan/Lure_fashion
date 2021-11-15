@@ -29,6 +29,10 @@
     <link rel="stylesheet" href="{% static  'css/style.css' %}" />
     <link rel="stylesheet" href="{% static  'css/skins/skin-demo-7.css' %}" />
     <link rel="stylesheet" href="{% static 'css/demos/demo-7.css' %}">
+
+    <!-- jquery form validation -->
+
+
   </head>
   <title>{% block title %}{% endblock %}</title>
   <div class="navbar">
@@ -43,12 +47,7 @@
             </button>
 
             <a href="index.html" class="logo">
-              <img
-                src="{% static 'images/lure_logo.png' %}"
-                alt="Lure"
-                width="155"
-                height="30"
-              />
+              <h4 style="color: #cc6666;">Lure fashion .</h4>
             </a>
 
             <nav class="main-nav">
@@ -552,5 +551,7 @@
   <!-- Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
   <script src="{% static 'js/demos/demo-7.js' %}"></script>
+
+
   {% endblock %}
 </html>

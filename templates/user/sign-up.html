@@ -17,7 +17,7 @@
 							<div class="tab-content">
 								{% include "includes/messages.html" %}
 							    <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
-							    	<form action="{% url 'sign-up' %}" method="POST">
+							    	<form action="{% url 'sign-up' %}" method="POST" id="myForm">
 										{% csrf_token %}
 										
 
