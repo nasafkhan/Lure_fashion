@@ -9,6 +9,7 @@ from products.forms import EditProduct, ProductForm
 from accounts.models import Account
 from django.contrib.admin.views.decorators import staff_member_required
 
+
 # Create your views here.
 @staff_member_required(login_url='admin_login')
 def dashboard(request):
@@ -76,6 +77,7 @@ def edit_product(request,prod_id):
 def delete_product(request, prod_id):
     Product.objects.get(id=prod_id).delete()
     return redirect('all_products')
+
 
 
 

@@ -306,14 +306,17 @@
                 aria-expanded="false"
                 data-display="static"
               >
-                <i class="icon-user"></i>
+              <i class="icon-user"></i>
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" style="width: 11rem">
                 <ul>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
                 <li><a href="{% url 'sign-in' %}">Sign In</a></li>
                 <li><a href="{% url 'sign-up' %}">Sign Up</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% endif %}
                 </ul>
               </div>
               <!-- End .dropdown-menu -->

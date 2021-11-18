@@ -7,7 +7,7 @@ class SignupForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ['first_name', 'last_name', 'phone', 'email', 'password']
+        fields = ['username', 'phone', 'email', 'password']
 
     def clean(self):
         cleaned_data = super(SignupForm,self).clean()
@@ -21,8 +21,7 @@ class SignupForm(forms.ModelForm):
 
     def __init__(self,*args, **kwargs):
         super(SignupForm,self,).__init__(*args, kwargs)
-        self.fields['first_name'].widget.attrs['placeholder'] = 'Enter the first name'
-        self.fields['last_name'].widget.attrs['placeholder'] = 'Enter the last name'
+        self.fields['username'].widget.attrs['placeholder'] = 'Enter the user name'
         self.fields['phone'].widget.attrs['placeholder'] = 'Enter the mobile number'
         self.fields['email'].widget.attrs['placeholder'] = 'Enter the email address'
         

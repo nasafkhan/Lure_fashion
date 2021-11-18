@@ -1,7 +1,8 @@
-{% extends 'adminpanel/base.html' %}
+{% extends 'adminpanel/admin_login.html' %}
 
-{% block title %} Admin Login {% endblock%}
+{% block title %}404 Access denied{% endblock %}
 {% block content %}
+<div class="contanier">
 <div class="page-wrap">
   <div class="page-not-found">
     <img
@@ -17,10 +18,10 @@
     <h4 class="text-md">Access Denied !</h4>
     <h4 class="text-sm text-sm-btm">
       You don’t have access to this area of application. Speak to your
-      administrator to unblock this feature. You can go back to
-      <a href="#">previous page</a>
+      You can go back to
+      <a class="btn" href="{% url 'sign-in' %}">previous page</>
     </h4>
   </div>
 </div>
-
+</div>
 {% endblock %}

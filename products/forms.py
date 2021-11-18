@@ -4,7 +4,7 @@ from .models import Product
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('product_name', 'description', 'price', 'image1', 'image2', 'image3', 'image4', 'stock', 'brand', 'category',)
+        fields = ('product_name','slug', 'description', 'price', 'image1', 'image2', 'image3', 'image4', 'stock', 'brand', 'category',)
 
         def __init__(self, *args,**kwargs):
             for field in self.fields:
@@ -14,4 +14,4 @@ class ProductForm(forms.ModelForm):
 class EditProduct(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('product_name', 'description', 'price', 'image1', 'image2', 'image3', 'image4', 'stock', 'brand', 'category',)
+        fields = ('product_name','slug', 'description', 'price', 'image1', 'image2', 'image3', 'image4', 'stock', 'brand', 'category',)

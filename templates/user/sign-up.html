@@ -19,20 +19,14 @@
 							    <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
 							    	<form action="{% url 'sign-up' %}" method="POST" id="myForm">
 										{% csrf_token %}
-										
-
-                                        <div class="form-group">
-							    			<label class="text-dark" for="register-email-2">First name *</label>
-											{{form.first_name}}
-							    		</div><!-- End .form-group -->
 
 										<div class="form-group">
-							    			<label class="text-dark" for="register-email-2">Last name *</label>
-							    			{{form.last_name}}
+							    			<label class="text-dark" for="">User name *</label>
+							    			{{form.username}}
 							    		</div><!-- End .form-group -->
 
                                         <div class="form-group">
-							    			<label class="text-dark" for="register-email-2">Phone *</label>
+							    			<label class="text-dark" for="">Phone *</label>
 							    			{{form.phone}}
 							    		</div><!-- End .form-group -->
 
@@ -42,12 +36,12 @@
 							    		</div><!-- End .form-group -->
 
 							    		<div class="form-group">
-							    			<label class="text-dark" for="register-password-2">Password *</label>
+							    			<label class="text-dark" for="">Password *</label>
 							    			{{form.password}}
 							    		</div><!-- End .form-group -->
 
                                         <div class="form-group">
-							    			<label class="text-dark" for="register-password-2">Re-enter Password *</label>
+							    			<label class="text-dark" for="">Re-enter Password *</label>
 							    			{{form.confirm_password}}
 							    		</div><!-- End .form-group -->
 										

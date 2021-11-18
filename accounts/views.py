@@ -4,9 +4,9 @@ from accounts.forms import SignupForm
 from accounts.models import Account
 from .verification_otp import sendOTP, checkOTP
 from django.contrib.admin.views.decorators import staff_member_required
+from twilio.base.exceptions import TwilioRestException
+
 # Create your views here.
-
-
 def sign_in(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -22,14 +22,14 @@ def sign_in(request):
 
 def sign_in_with_OTP(request):
     if request.method == 'POST':
-        mobile = request.POST['mobile']
+        mobile = request.POST['phone']
         try:
-            if Account.objects.get(phone = mobile).exist():
-                sendOTP(mobile)
-                request.session['has_mobile'] = mobile
-                return redirect('verify_otp')
+            Account.objects.get(phone=mobile)
+            sendOTP(mobile)
+            request.session['has_mobile'] = mobile
+            return redirect('verify_otp')
         except:
-            messages.info(request, 'User is not registered')
+            messages.info(request, "User is not registered!")
     return render(request, 'user/otp_login.html')
 
 def verify_otp(request):
@@ -39,11 +39,11 @@ def verify_otp(request):
         otp_value = checkOTP(mobile,get_otp)
         if otp_value:
             user=Account.objects.get(phone=mobile)
-            auth.login(request,user)
+            auth.login(request,user) 
             return redirect('home')
         else:
             messages.error(request, 'OTP is not valid please try again')
-            return 
+            return redirect(request, 'verify_otp')
         
     return render(request, 'user/otp_verify.html')
 
@@ -52,16 +52,37 @@ def sign_up(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name  = form.cleaned_data['last_name']
+            username = form.cleaned_data['username']
             phone      = form.cleaned_data['phone']
             email      = form.cleaned_data['email']
             password   = form.cleaned_data['password']
-            user_name  = first_name
-            user = Account.objects.create_user(first_name = first_name, last_name = last_name,username = user_name,email = email,phone=phone, password = password)
-            user.save()
-            messages.success(request, 'Registration Successful.')
-            return redirect('home')
+            confirm_password = form.cleaned_data['confirm_password']
+
+            request.session['username'] = username
+            request.session['phone']  = phone
+            request.session['email'] = email
+            request.session['password'] = password
+
+            if password == confirm_password:
+                if Account.objects.filter(username=username).exists():
+                    messages.info(request, 'Username is already taken!')
+                    return redirect('sign-up')
+
+                elif Account.objects.filter(email=email).exists():
+                    messages.info(request, 'Email is already taken!')
+                    return redirect('sign-up')
+
+                elif Account.objects.filter(phone=phone).exists():
+                    messages.info(request, 'Phone number is already taken!')
+                    return redirect('sign-up')
+
+                else:
+                    try:
+                        sendOTP(phone)
+                        messages.success(request, 'Please verfiy your account with the OTP sent to your mobile')
+                        return redirect('verify_account')
+                    except TwilioRestException:
+                        messages.error(request, 'Enter a valid mobile number')                  
     else:
         form = SignupForm()
     context = {
@@ -69,11 +90,34 @@ def sign_up(request):
     }
     return render(request, 'user/sign-up.html', context)
 
+def verify_account(request):
+    username = request.session['username']
+    email    = request.session['email']
+    phone    = request.session['phone']
+    password = request.session['password']
+
+    if request.method == 'POST':
+        otp = request.POST['otp_code']
+        try:
+            mobile = request.session['phone']
+        except KeyError:
+            messages.error(request, )
+        verified =  checkOTP(mobile, otp)
+        if verified:
+            user = Account.objects.create_user(username = username, phone=phone, email=email, password=password )
+            user.save()
+            del request.session['username']
+            del request.session['phone']
+            del request.session['email']
+            del request.session['password']
+            return redirect('home')
+    return render(request, 'user/otp_verify.html')
 
 def logout(request):
-    auth.logout(request)
-    messages.success(request, 'You are logged out.')
-    return redirect('sign-in')
+    if request.user.is_authenticated:
+        auth.logout(request)
+        messages.success(request, 'You are logged out.')
+        return redirect('sign-in')
 
 
 def admin_login(request):

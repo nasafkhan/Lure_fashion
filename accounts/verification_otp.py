@@ -14,7 +14,7 @@ def sendOTP(mobile):
     verification = client.verify \
                         .services(settings.TWILIO_VERIFICATION_SID) \
                         .verifications \
-                        .create(to='91'+mobile, channel='sms')
+                        .create(to='+91'+mobile, channel='sms')
 
     print(verification.status)
 
