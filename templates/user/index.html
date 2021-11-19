@@ -164,12 +164,12 @@
                                             </div><!-- End .product-action-vertical -->
 
                                             <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                <a href="{% url 'add_cart' product.id %}" class="btn-product btn-cart"><span>add to cart</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
                                         <div class="product-body">
-                                            <h3 class="product-title"><a href="product.html">{{ product.product_name }}</a></h3><!-- End .product-title -->
+                                            <h3 class="product-title"><a href="product.html">{{ product.product_name}}</a></h3><!-- End .product-title -->
                                             <div class="product-price">
                                                 <span class="new-price">${{ product.price }}</span>
                                                 <span class="old-price">${{ product.price }}</span>

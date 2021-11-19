@@ -55,9 +55,17 @@
                 <li class="megamenu-container active">
                   <a href="{% url 'home' %}" class="sf-with-ul">Home</a>
                 </li>
+                
                 <li>
-                  <a href="#" class="sf-with-ul">Shop</a>
-                </li>
+                  <a href="" class="sf-with-ul">Categories</a>
+                  <ul>
+                      {% for category in links %}
+                      <li><a href="{{category.get_url}}">{{category.category_name}}</a></li>
+                      
+                      {% endfor %}
+                  </ul>
+              </li>
+
                 <li>
                   <a href="#" class="sf-with-ul">Product</a>
                 </li>
@@ -106,7 +114,7 @@
 
             <div class="dropdown cart-dropdown">
               <a
-                href="#"
+                href="{% url 'cart' %}"
                 class="dropdown-toggle"
                 role="button"
                 data-toggle="dropdown"
@@ -115,7 +123,7 @@
                 data-display="static"
               >
                 <i class="icon-shopping-cart"></i>
-                <span class="cart-count">2</span>
+                <span class="cart-count">{{cart_count}}</span>
               </a>
 
               <div class="dropdown-menu dropdown-menu-right">
@@ -123,7 +131,7 @@
                   <div class="product">
                     <div class="product-cart-details">
                       <h4 class="product-title">
-                        <a href="product.html"
+                        <a href=""
                           >Beige knitted elastic runner shoes</a
                         >
                       </h4>

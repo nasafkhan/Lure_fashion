@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'category',
     'products',
     'brands',
+    'cart',
+
+
     'crispy_forms',
 ]
 
@@ -59,7 +62,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 
 ]
 
@@ -76,6 +78,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                'category.context_processors.menu_links',
+                'cart.context_processors.counter'
             ],
         },
     },
@@ -95,6 +100,18 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'lure_fashion',
+#         'USER' : 'postgres',
+#         'PASSWORD' : '12345',
+#         'HOST' : 'localhost',
+#     }
+# }
+
 
 
 # Password validation
