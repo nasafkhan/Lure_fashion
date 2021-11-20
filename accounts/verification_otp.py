@@ -31,7 +31,6 @@ def checkOTP(mobile, otp):
                             .verification_checks \
                             .create(to='+91'+mobile, code=otp)
 
-    print(verification_check.status)
     if verification_check.status == 'approved':
         return True
     else:

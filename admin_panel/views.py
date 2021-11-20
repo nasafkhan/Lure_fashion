@@ -117,7 +117,6 @@ def edit_brand(request,brand_id):
     form = EditBrand(instance=edit_bran)
     print(form)
     if request.method == 'POST':
-        print('fsdfdsfds')
         form=EditBrand(request.POST, request.FILES, instance=edit_bran)
         if form.is_valid():
             try:

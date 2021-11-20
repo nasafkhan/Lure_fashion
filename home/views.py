@@ -23,5 +23,15 @@ def home(request, category_slug=None):
     
 
 def product_detail(request, category_slug, product_slug):
-    return render(request, 'user/product_detail.html')
+    try:
+        product = Product.objects.get(category__slug = category_slug, slug = product_slug)
+        
+    except Exception as error:
+        raise error
+    
+    context = {
+        'product' : product
+    }
+    print('fgf',product.get_url())
+    return render(request, 'user/product_detail.html', context)
     
