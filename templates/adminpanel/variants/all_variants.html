@@ -1,0 +1,27 @@
+{%  extends 'adminpanel/base.html' %}
+
+{% block content %}
+        <div class="container p-5">
+            <table class="table">
+                <thead class="thead">
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Variation Category</th>
+                    <th scope="col">Variation Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for variant in variants %}
+                  <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{variant.product}}</td>
+                    <td>{{variant.variation_category}}</td>
+                    <td>{{variant.variation_value}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+
+{% endblock %}

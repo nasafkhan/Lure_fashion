@@ -4,8 +4,8 @@ from brands.models import Brand
 from brands.forms import BrandForm, EditBrand
 from category.models import Category
 from category.forms import CategoryForm, EditCategory
-from products.models import Product
-from products.forms import EditProduct, ProductForm
+from products.models import Product, Variation
+from products.forms import EditProduct, EditVariant, ProductForm, VariantForm
 from accounts.models import Account
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -79,7 +79,61 @@ def delete_product(request, prod_id):
     return redirect('all_products')
 
 
+@staff_member_required(login_url='access_denied')
+def all_variants(request):
+    variants = Variation.objects.all()
 
+    context = {
+        'variants' : variants 
+    }
+
+    return render(request, 'adminpanel/variants/all_variants.html', context)
+
+
+@staff_member_required(login_url='access_denied')
+def add_variant(request):
+    form = VariantForm()
+
+    if request.method == 'POST':
+        variant_form = VariantForm(request.POST, request.FILES)
+
+        if variant_form.is_valid():
+            variant_form.save()
+            messages.success(request, 'Variant added successfully')
+        else:
+            messages.error(request, 'Form submission failed')
+        
+        return redirect('add_variant')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'adminpanel/variants/add_variant.html', context)
+
+
+@staff_member_required(login_url='access_denied')
+def edit_variant(request, variant_id):
+    edit_varian=Variation.object.get(id=variant_id)
+    form = EditVariant(instance=edit_varian)
+    if request.method == 'POST':
+        form=EditVariant(request.POST, instance=edit_varian)
+        if form.is_valid():
+            try:
+                form.save()
+            except:
+                context = {'form': form}
+                return render(request,'adminpanel/variants/edit_variant.html', context)
+            return redirect('all_variants')
+    
+    context = {
+        'form': form
+    }
+    return render(request,'adminpanel/variants/edit_variant.html', context)
+
+@staff_member_required(login_url='access_denied')
+def delete_variant(request, varian_id):
+    Variation.objects.get(id=varian_id).delete()
+    return redirect('all_variants')
 
 @staff_member_required(login_url='access_denied')
 def all_brands(request):

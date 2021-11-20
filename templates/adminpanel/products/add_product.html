@@ -15,8 +15,8 @@ crispy_forms_filters %} {% block content %}
     {% csrf_token %} {{form|crispy}}
     <div class="form-group">
       <div id="image-box" class="image-container"></div>
-      <button class="btn btn-outline-info" id="crop-btn" style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
-      <button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;" type="submit">Post</button>
+      <button class="btn btn-primary my-4" id="crop-btn" style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
+      <button class="btn btn-primary my-4"o id="confirm-btn" style="width: 100%; margin-top: 10px;" type="submit">Post</button>
     </div>
 
 
@@ -95,4 +95,5 @@ crispy_forms_filters %} {% block content %}
 	    });
 	});	
 </script>
+
 {% endblock %}
