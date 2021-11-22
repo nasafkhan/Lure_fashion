@@ -1,6 +1,7 @@
 {% extends 'user/base.html' %}
-{% block title %}Cart{% endblock %}
+{% block title %}Lure fashion | Cart{% endblock %}
 {% block content %}
+
 
 <div class="container">
 <main class="main">
@@ -48,15 +49,17 @@
                                             </h3><!-- End .product-title -->
                                         </div><!-- End .product -->
                                     </td>
-                                    <td class="price-col">&#8377;   {{cart_item.product.price}}</td>
+                                    <td class="price-col">{{cart_item.product.price}}</td>
                                     <td class="quantity-col">
 
-                                        <div class="cart-product-quantity">
-                                            <input type="number" class="form-control" value="{{cart_item.quantity}}" min="1" max="5" step="1" data-decimals="0" required>
-                                        </div><!-- End .cart-product-quantity -->
+                                        <div class="d-flex justify-content-left align-items-center">   
+                                        <a href="{% url 'remove_cart_item' cart_item.product.id %}"> <button class="form-control">-</button> </a>
+                                        <div class="form-control text-center" style="width: 1rem;">{{cart_item.quantity}}</div>
+                                        <a href="{% url 'add_cart' cart_item.product.id %}"><button class="form-control">+</button></a>
+                                        </div>
                                         
                                     </td>
-                                    <td class="total-col">&#8377; {{ cart_item.sub_total }}</td>
+                                    <td class="total-col">{{ cart_item.sub_total }}</td>
                                     <td class="remove-col"><a href="{% url 'delete_cart_item' cart_item.product.id %}" class="btn-remove"><i class="icon-close"></i></a></td>
                                 </tr>
                                 {% endfor %}
@@ -86,11 +89,11 @@
                                 <tbody>
                                     <tr class="summary-subtotal">
                                         <td>Subtotal:</td>
-                                        <td>&#8377; {{total}}</td>
+                                        <td>{{total}}</td>
                                     </tr><!-- End .summary-subtotal -->
                                     <tr class="summary-shipping">
                                         <td>Tax:</td>
-                                        <td>&#8377; {{tax}}</td>
+                                        <td>{{tax}}</td>
                                     </tr>
                                     <tr class="summary-shipping">
                                         <td>Offers:</td>
@@ -106,7 +109,7 @@
 
                                     <tr class="summary-total">
                                         <td>Grand Total:</td>
-                                        <td>&#8377; {{grand_total}}</td>
+                                        <td>{{grand_total}}</td>
                                     </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->
@@ -123,4 +126,8 @@
     </div><!-- End .page-content -->
 </main><!-- End .main -->
 </div>
+
+<script>
+    
+</script>
 {% endblock %}
