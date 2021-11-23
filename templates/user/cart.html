@@ -15,7 +15,7 @@
             <div class="container mt-3">
                 {% if not cart_items %}
                 <div class="container text-center">
-                    <h1 class="page-title"><span>Youre cart is </span>empty</h1>
+                    <h1 class="page-title"><span>Your cart is </span>empty</h1>
                     <a href="{% url 'home' %}" class="btn btn-outline-dark mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
                 </div>
 
@@ -37,7 +37,7 @@
                                 {% for cart_item in cart_items %}
                                 <tr>
                                     <td class="product-col">
-                                        <div class="product">
+                                        <div class="product d-flex justify-content-around">
                                             <figure class="product-media">
                                                 <a href="#">
                                                     <img src="{{ cart_item.product.image1.url }}" alt="Product image">
@@ -45,22 +45,40 @@
                                             </figure>
 
                                             <h3 class="product-title">
-                                                <a href="#">{{cart_item.product.product_name}}</a>
+                                                <a href="">{{cart_item.product.product_name}}</a>
                                             </h3><!-- End .product-title -->
+                                            <p class="text-mute small">{% if cart_item.variations.all %}
+                                                {% for item in cart_item.variations.all %}
+                                                {{ item.variation_category | capfirst }} : {{item.variation_value | capfirst }} <br>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </p>
                                         </div><!-- End .product -->
                                     </td>
-                                    <td class="price-col">{{cart_item.product.price}}</td>
+                                    <td class="price-col">&#8377; {{cart_item.product.price}}</td>
                                     <td class="quantity-col">
 
-                                        <div class="d-flex justify-content-left align-items-center">   
-                                        <a href="{% url 'remove_cart_item' cart_item.product.id %}"> <button class="form-control">-</button> </a>
+                                        <div class="d-flex justify-content-left align-items-center"> 
+                                            <form action="{% url 'remove_cart_item' cart_item.product.id cart_item.id    %}" method="POST">
+                                                {% csrf_token %}
+                                                {% for item in cart_item.variations.all %}
+                                                <input type="hidden" name="{{item.variation_category | lower }}" value="{{item.variation_value | lower }}" id="">
+                                                {% endfor %}
+                                                <button class="form-control" type="submit">-</button>
+                                            </form>  
                                         <div class="form-control text-center" style="width: 1rem;">{{cart_item.quantity}}</div>
-                                        <a href="{% url 'add_cart' cart_item.product.id %}"><button class="form-control">+</button></a>
+                                        <form action="{% url 'add_cart' cart_item.product.id %}" method="POST">
+                                            {% csrf_token %}
+                                            {% for item in cart_item.variations.all %}
+                                            <input type="hidden" name="{{item.variation_category | lower }}" value="{{item.variation_value | lower }}" id="">
+                                            {% endfor %}
+                                            <button class="form-control " type="submit">+</button>
+                                        </form>
                                         </div>
                                         
                                     </td>
-                                    <td class="total-col">{{ cart_item.sub_total }}</td>
-                                    <td class="remove-col"><a href="{% url 'delete_cart_item' cart_item.product.id %}" class="btn-remove"><i class="icon-close"></i></a></td>
+                                    <td class="total-col">&#8377;  {{ cart_item.sub_total }}</td>
+                                    <td class="remove-col"><a href="{% url 'delete_cart_item' cart_item.product.id  cart_item.id %}" class="btn-remove"><i class="icon-close"></i></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -89,11 +107,11 @@
                                 <tbody>
                                     <tr class="summary-subtotal">
                                         <td>Subtotal:</td>
-                                        <td>{{total}}</td>
+                                        <td>&#8377; {{total}}</td>
                                     </tr><!-- End .summary-subtotal -->
                                     <tr class="summary-shipping">
                                         <td>Tax:</td>
-                                        <td>{{tax}}</td>
+                                        <td>&#8377; {{tax}}</td>
                                     </tr>
                                     <tr class="summary-shipping">
                                         <td>Offers:</td>
@@ -109,12 +127,12 @@
 
                                     <tr class="summary-total">
                                         <td>Grand Total:</td>
-                                        <td>{{grand_total}}</td>
+                                        <td>&#8377; {{grand_total}}</td>
                                     </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->
 
-                            <a href="" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+                            <a href="{% url 'checkout' %}" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
                         </div><!-- End .summary -->
 
                         <a href="{% url 'home' %}" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>

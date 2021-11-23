@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
+from django.contrib.auth.decorators import login_required
 from accounts.forms import SignupForm
 from accounts.models import Account
+from cart.models import Cart, CartItem
+from cart.views import _cart_id
 from .verification_otp import sendOTP, checkOTP
 from django.contrib.admin.views.decorators import staff_member_required
 from twilio.base.exceptions import TwilioRestException
@@ -13,6 +16,23 @@ def sign_in(request):
         password = request.POST.get('password')
         user = auth.authenticate(email=email, password=password)
         if user is not None:
+            try:
+                print('entered in try 1')
+                print('cartid ',_cart_id(request))
+                cart = Cart.objects.get(cart_id = _cart_id(request))
+                print('entered in try 2')
+                is_cart_items_exists = CartItem.objects.filter(cart=cart).exists()
+                print('entered in try 3')
+                if is_cart_items_exists:
+                    print('entered in try 4')
+                    cart_item = CartItem.objects.filter(cart=cart)
+                    print("this is cart item:",cart_item)
+                    for item in cart_item:
+                        item.user = user
+                        item.save()
+            except:
+                print('entered in except')
+                pass
             auth.login(request, user)
             return redirect('home')
         else:
@@ -113,6 +133,7 @@ def verify_account(request):
             return redirect('home')
     return render(request, 'user/otp_verify.html')
 
+@login_required(login_url='login')
 def logout(request):
     if request.user.is_authenticated:
         auth.logout(request)

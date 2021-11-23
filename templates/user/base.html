@@ -28,11 +28,9 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{% static  'css/style.css' %}" />
     <link rel="stylesheet" href="{% static  'css/skins/skin-demo-7.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/demos/demo-7.css' %}">
+    <link rel="stylesheet" href="{% static 'css/demos/demo-7.css' %}" />
 
     <!-- jquery form validation -->
-
-
   </head>
   <title>{% block title %}{% endblock %}</title>
   <div class="navbar">
@@ -46,36 +44,39 @@
               <i class="icon-bars"></i>
             </button>
 
-            <a href="index.html" class="logo">
-              <h4 style="color: #cc6666;">Lure fashion .</h4>
+            <a href="{% url 'home' %}" class="logo">
+              <h4 style="color: #cc6666">Lure fashion .</h4>
             </a>
 
             <nav class="main-nav">
               <ul class="menu">
                 <li class="megamenu-container active">
-                  <a href="{% url 'home' %}" class="sf-with-ul">Home</a>
+                  <a href="{% url 'home' %}" >Home</a>
                 </li>
-                
-                <li>
-                  <a href="" class="sf-with-ul">Categories</a>
-                  <ul>
-                      {% for category in links %}
-                      <li><a href="{{category.get_url}}">{{category.category_name}}</a></li>
-                      
-                      {% endfor %}
-                  </ul>
-              </li>
 
                 <li>
-                  <a href="#" class="sf-with-ul">Products</a>
+                  <a href="#" >Categories</a>
+                  <ul>
+                    {% for category in links %}
+                    <li>
+                      <a href="{{category.get_url}}"
+                        >{{category.category_name}}</a
+                      >
+                    </li>
+
+                    {% endfor %}
+                  </ul>
+                </li>
+
+                <li>
+                  <a href="#" >Products</a>
                 </li>
                 <li>
-                  <a href="#" class="sf-with-ul">Pages</a>
+                  <a href="#" >Pages</a>
                 </li>
                 <li>
-                  <a href="#" class="sf-with-ul">Blog</a>
+                  <a href="#" >Blog</a>
                 </li>
-                
               </ul>
               <!-- End .menu -->
             </nav>
@@ -96,7 +97,8 @@
                   <input
                     type="search"
                     class="form-control"
-                    name="q"~
+                    name="q"
+                    ~
                     id="q"
                     placeholder="Search product ..."
                     required
@@ -129,9 +131,7 @@
                   <div class="product">
                     <div class="product-cart-details">
                       <h4 class="product-title">
-                        <a href=""
-                          >Beige knitted elastic runner shoes</a
-                        >
+                        <a href="">Beige knitted elastic runner shoes</a>
                       </h4>
 
                       <span class="cart-product-info">
@@ -293,7 +293,7 @@
                   <a href="cart.html" class="btn btn-primary">View Cart</a>
                   <a href="checkout.html" class="btn btn-outline-primary-2"
                     ><span>Checkout</span><i class="icon-long-arrow-right"></i
-                  ></a>
+                  ></a>8000
                 </div>
                 <!-- End .dropdown-cart-total -->
               </div>
@@ -312,17 +312,21 @@
                 aria-expanded="false"
                 data-display="static"
               >
-              <i class="icon-user"></i>
+                <i class="icon-user"></i>
               </a>
 
-              <div class="dropdown-menu dropdown-menu-right" style="width: 11rem">
+              <div
+                class="dropdown-menu dropdown-menu-right"
+                style="width: 11rem"
+              >
                 <ul>
-                {% if request.user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                <li><a href="{% url 'sign-in' %}">Sign In</a></li>
-                <li><a href="{% url 'sign-up' %}">Sign Up</a></li>
-                {% endif %}
+                  {% if request.user.is_authenticated %}
+                  <li>{{request.user.username}}</li>
+                  <li><a href="{% url 'logout' %}">Logout</a></li>
+                  {% else %}
+                  <li><a href="{% url 'sign-in' %}">Sign In</a></li>
+                  <li><a href="{% url 'sign-up' %}">Sign Up</a></li>
+                  {% endif %}
                 </ul>
               </div>
               <!-- End .dropdown-menu -->
@@ -338,212 +342,210 @@
     <!-- End .header -->
     {% endblock %}
   </div>
+  <div class="container">{% block content %}{% endblock %}</div>
+  {% block footer %}
 
-  {% block content %}{% endblock %}
+  <footer class="footer footer-2">
+    <div class="footer-middle">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 col-lg-4">
+            <div class="widget widget-about">
+              <img
+                src="{% static 'images/lure_logo.png' %}"
+                class="footer-logo"
+                alt="Footer Logo"
+                width="105"
+                height="25"
+              />
+              <p>
+                Praesent dapibus, neque id cursus ucibus, tortor neque egestas
+                augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.
+                Nam dui mi, tincidunt quis, accumsan porttitor, facilisis
+                luctus, metus.
+              </p>
 
-    {% block footer %}
-
-    <footer class="footer footer-2">
-      <div class="footer-middle">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-12 col-lg-4">
-              <div class="widget widget-about">
-                <img
-                  src="{% static 'images/lure_logo.png' %}"
-                  class="footer-logo"
-                  alt="Footer Logo"
-                  width="105"
-                  height="25"
-                />
-                <p>
-                  Praesent dapibus, neque id cursus ucibus, tortor neque egestas
-                  augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.
-                  Nam dui mi, tincidunt quis, accumsan porttitor, facilisis
-                  luctus, metus.
-                </p>
-
-                <div class="widget-about-info">
-                  <div class="row">
-                    <div class="col-sm-6 col-md-4">
-                      <span class="widget-about-title"
-                        >Got Question? Call us 24/7</span
-                      >
-                      <a href="tel:123456789">+0123 456 789</a>
-                    </div>
-                    <!-- End .col-sm-6 -->
-                    <div class="col-sm-6 col-md-8">
-                      <span class="widget-about-title">Payment Method</span>
-                      <figure class="footer-payments">
-                        <img
-                          src="{% static 'images/payments.png' %}"
-                          alt="Payment methods"
-                          width="272"
-                          height="20"
-                        />
-                      </figure>
-                      <!-- End .footer-payments -->
-                    </div>
-                    <!-- End .col-sm-6 -->
+              <div class="widget-about-info">
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">
+                    <span class="widget-about-title"
+                      >Got Question? Call us 24/7</span
+                    >
+                    <a href="tel:123456789">+0123 456 789</a>
                   </div>
-                  <!-- End .row -->
+                  <!-- End .col-sm-6 -->
+                  <div class="col-sm-6 col-md-8">
+                    <span class="widget-about-title">Payment Method</span>
+                    <figure class="footer-payments">
+                      <img
+                        src="{% static 'images/payments.png' %}"
+                        alt="Payment methods"
+                        width="272"
+                        height="20"
+                      />
+                    </figure>
+                    <!-- End .footer-payments -->
+                  </div>
+                  <!-- End .col-sm-6 -->
                 </div>
-                <!-- End .widget-about-info -->
+                <!-- End .row -->
               </div>
-              <!-- End .widget about-widget -->
+              <!-- End .widget-about-info -->
             </div>
-            <!-- End .col-sm-12 col-lg-4 -->
+            <!-- End .widget about-widget -->
+          </div>
+          <!-- End .col-sm-12 col-lg-4 -->
 
-            <div class="col-sm-4 col-lg-2">
-              <div class="widget">
-                <h4 class="widget-title">Useful links</h4>
-                <!-- End .widget-title -->
+          <div class="col-sm-4 col-lg-2">
+            <div class="widget">
+              <h4 class="widget-title">Useful links</h4>
+              <!-- End .widget-title -->
 
-                <ul class="widget-list">
-                  <li><a href="about.html">About Molla</a></li>
-                  <li><a href="#">How to shop on Molla</a></li>
-                  <li><a href="faq.html">FAQ</a></li>
-                  <li><a href="contact.html">Contact us</a></li>
-                  <li><a href="login.html">Log in</a></li>
-                </ul>
-                <!-- End .widget-list -->
-              </div>
-              <!-- End .widget -->
+              <ul class="widget-list">
+                <li><a href="about.html">About Molla</a></li>
+                <li><a href="#">How to shop on Molla</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+                <li><a href="login.html">Log in</a></li>
+              </ul>
+              <!-- End .widget-list -->
             </div>
-            <!-- End .col-sm-4 col-lg-2 -->
+            <!-- End .widget -->
+          </div>
+          <!-- End .col-sm-4 col-lg-2 -->
 
-            <div class="col-sm-4 col-lg-2">
-              <div class="widget">
-                <h4 class="widget-title">Customer Service</h4>
-                <!-- End .widget-title -->
+          <div class="col-sm-4 col-lg-2">
+            <div class="widget">
+              <h4 class="widget-title">Customer Service</h4>
+              <!-- End .widget-title -->
 
-                <ul class="widget-list">
-                  <li><a href="#">Payment Methods</a></li>
-                  <li><a href="#">Money-back guarantee!</a></li>
-                  <li><a href="#">Returns</a></li>
-                  <li><a href="#">Shipping</a></li>
-                  <li><a href="#">Terms and conditions</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                </ul>
-                <!-- End .widget-list -->
-              </div>
-              <!-- End .widget -->
+              <ul class="widget-list">
+                <li><a href="#">Payment Methods</a></li>
+                <li><a href="#">Money-back guarantee!</a></li>
+                <li><a href="#">Returns</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Terms and conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+              <!-- End .widget-list -->
             </div>
-            <!-- End .col-sm-4 col-lg-2 -->
+            <!-- End .widget -->
+          </div>
+          <!-- End .col-sm-4 col-lg-2 -->
 
-            <div class="col-sm-4 col-lg-2">
-              <div class="widget">
-                <h4 class="widget-title">My Account</h4>
-                <!-- End .widget-title -->
+          <div class="col-sm-4 col-lg-2">
+            <div class="widget">
+              <h4 class="widget-title">My Account</h4>
+              <!-- End .widget-title -->
 
-                <ul class="widget-list">
-                  <li><a href="#">Sign In</a></li>
-                  <li><a href="cart.html">View Cart</a></li>
-                  <li><a href="#">My Wishlist</a></li>
-                  <li><a href="#">Track My Order</a></li>
-                  <li><a href="#">Help</a></li>
-                </ul>
-                <!-- End .widget-list -->
-              </div>
-              <!-- End .widget -->
+              <ul class="widget-list">
+                <li><a href="#">Sign In</a></li>
+                <li><a href="cart.html">View Cart</a></li>
+                <li><a href="#">My Wishlist</a></li>
+                <li><a href="#">Track My Order</a></li>
+                <li><a href="#">Help</a></li>
+              </ul>
+              <!-- End .widget-list -->
             </div>
-            <!-- End .col-sm-4 col-lg-2 -->
+            <!-- End .widget -->
+          </div>
+          <!-- End .col-sm-4 col-lg-2 -->
 
-            <div class="col-sm-6 col-lg-2">
-              <div class="widget widget-newsletter">
-                <h4 class="widget-title">Sign up to newsletter</h4>
-                <!-- End .widget-title -->
+          <div class="col-sm-6 col-lg-2">
+            <div class="widget widget-newsletter">
+              <h4 class="widget-title">Sign up to newsletter</h4>
+              <!-- End .widget-title -->
 
-                <p>
-                  Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan.
-                </p>
+              <p>
+                Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan.
+              </p>
 
-                <form action="#">
-                  <div class="input-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      placeholder="Enter your Email Address"
-                      aria-label="Email Adress"
-                      required
-                    />
-                    <div class="input-group-append">
-                      <button class="btn btn-dark" type="submit">
-                        <i class="icon-long-arrow-right"></i>
-                      </button>
-                    </div>
-                    <!-- .End .input-group-append -->
+              <form action="#">
+                <div class="input-group">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Enter your Email Address"
+                    aria-label="Email Adress"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <button class="btn btn-dark" type="submit">
+                      <i class="icon-long-arrow-right"></i>
+                    </button>
                   </div>
-                  <!-- .End .input-group -->
-                </form>
-              </div>
-              <!-- End .widget -->
+                  <!-- .End .input-group-append -->
+                </div>
+                <!-- .End .input-group -->
+              </form>
             </div>
-            <!-- End .col-sm-6 col-lg-2 -->
+            <!-- End .widget -->
           </div>
-          <!-- End .row -->
+          <!-- End .col-sm-6 col-lg-2 -->
         </div>
-        <!-- End .container-fluid -->
+        <!-- End .row -->
       </div>
-      <!-- End .footer-middle -->
+      <!-- End .container-fluid -->
+    </div>
+    <!-- End .footer-middle -->
 
-      <div class="footer-bottom">
-        <div class="container-fluid">
-          <p class="footer-copyright">
-            Copyright © 2019 Molla Store. All Rights Reserved.
-          </p>
-          <!-- End .footer-copyright -->
-          <ul class="footer-menu">
-            <li><a href="#">Terms Of Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-          </ul>
-          <!-- End .footer-menu -->
+    <div class="footer-bottom">
+      <div class="container-fluid">
+        <p class="footer-copyright">
+          Copyright © 2019 Molla Store. All Rights Reserved.
+        </p>
+        <!-- End .footer-copyright -->
+        <ul class="footer-menu">
+          <li><a href="#">Terms Of Use</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <!-- End .footer-menu -->
 
-          <div class="social-icons social-icons-color">
-            <span class="social-label">Social Media</span>
-            <a
-              href="#"
-              class="social-icon social-facebook"
-              title="Facebook"
-              target="_blank"
-              ><i class="icon-facebook-f"></i
-            ></a>
-            <a
-              href="#"
-              class="social-icon social-twitter"
-              title="Twitter"
-              target="_blank"
-              ><i class="icon-twitter"></i
-            ></a>
-            <a
-              href="#"
-              class="social-icon social-instagram"
-              title="Instagram"
-              target="_blank"
-              ><i class="icon-instagram"></i
-            ></a>
-            <a
-              href="#"
-              class="social-icon social-youtube"
-              title="Youtube"
-              target="_blank"
-              ><i class="icon-youtube"></i
-            ></a>
-            <a
-              href="#"
-              class="social-icon social-pinterest"
-              title="Pinterest"
-              target="_blank"
-              ><i class="icon-pinterest"></i
-            ></a>
-          </div>
-          <!-- End .soial-icons -->
+        <div class="social-icons social-icons-color">
+          <span class="social-label">Social Media</span>
+          <a
+            href="#"
+            class="social-icon social-facebook"
+            title="Facebook"
+            target="_blank"
+            ><i class="icon-facebook-f"></i
+          ></a>
+          <a
+            href="#"
+            class="social-icon social-twitter"
+            title="Twitter"
+            target="_blank"
+            ><i class="icon-twitter"></i
+          ></a>
+          <a
+            href="#"
+            class="social-icon social-instagram"
+            title="Instagram"
+            target="_blank"
+            ><i class="icon-instagram"></i
+          ></a>
+          <a
+            href="#"
+            class="social-icon social-youtube"
+            title="Youtube"
+            target="_blank"
+            ><i class="icon-youtube"></i
+          ></a>
+          <a
+            href="#"
+            class="social-icon social-pinterest"
+            title="Pinterest"
+            target="_blank"
+            ><i class="icon-pinterest"></i
+          ></a>
         </div>
-        <!-- End .container-fluid -->
+        <!-- End .soial-icons -->
       </div>
-      <!-- End .footer-bottom -->
-    </footer>
-    {% endblock %}
+      <!-- End .container-fluid -->
+    </div>
+    <!-- End .footer-bottom -->
+  </footer>
+  {% endblock %}
   <!-- End .footer -->
   {% block script %}
   <!-- Plugins JS File -->
@@ -560,7 +562,6 @@
   <!-- Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
   <script src="{% static 'js/demos/demo-7.js' %}"></script>
-
 
   {% endblock %}
 </html>
