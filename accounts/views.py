@@ -8,6 +8,7 @@ from cart.views import _cart_id
 from .verification_otp import sendOTP, checkOTP
 from django.contrib.admin.views.decorators import staff_member_required
 from twilio.base.exceptions import TwilioRestException
+import requests
 
 # Create your views here.
 def sign_in(request):
@@ -17,24 +18,26 @@ def sign_in(request):
         user = auth.authenticate(email=email, password=password)
         if user is not None:
             try:
-                print('entered in try 1')
-                print('cartid ',_cart_id(request))
                 cart = Cart.objects.get(cart_id = _cart_id(request))
-                print('entered in try 2')
-                is_cart_items_exists = CartItem.objects.filter(cart=cart).exists()
-                print('entered in try 3')
-                if is_cart_items_exists:
-                    print('entered in try 4')
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
+                if is_cart_item_exists:
                     cart_item = CartItem.objects.filter(cart=cart)
-                    print("this is cart item:",cart_item)
                     for item in cart_item:
                         item.user = user
                         item.save()
             except:
-                print('entered in except')
                 pass
             auth.login(request, user)
-            return redirect('home')
+            url = request.META.get('HTTP_REFERER')
+            try:
+                query = requests.utils.urlparse(url).query
+                params = dict(x.split('=') for x in query.split('&'))
+                if 'next' in params:
+                    nextPage = params['next']
+                    return redirect(nextPage)
+            except:
+                return redirect('home')
+
         else:
             messages.error(request, 'Invalid login credentials')
             return redirect('sign-in')
@@ -133,7 +136,7 @@ def verify_account(request):
             return redirect('home')
     return render(request, 'user/otp_verify.html')
 
-@login_required(login_url='login')
+@login_required(login_url='sign-in')
 def logout(request):
     if request.user.is_authenticated:
         auth.logout(request)

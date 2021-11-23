@@ -127,11 +127,11 @@
                                             <td class="total-col p-3">&#8377; {{ cart_item.sub_total }}</td>
                                         </tr>
                                         {% endfor %}
+                                        <tr class="total-col">
+                                        <td>Grand Total:</td>
+                                        <td>&#8377; {{grand_total}}</td>
+                                    </tr>
                                     </tbody>
-                                    <div class="d-flex align-items-center">
-                                        <td class="total-col">Total:</td>
-                                        <h3><td class="total-col">{{ grand_total }}</td></h3>
-                                    </div>
                                 </table>
 
                                 <!-- End .table table-summary -->
