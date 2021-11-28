@@ -118,7 +118,7 @@ Checkout{% endblock %} {% block content %}
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 <script>
-  var amount = '{{converted_amount}}'
+  var amount = '{{amount}}'
   console.log('log amount', amount)
 	// Render the PayPal button into #paypal-button-container
 	paypal.Buttons({
@@ -135,7 +135,7 @@ Checkout{% endblock %} {% block content %}
 			return actions.order.create({
 				purchase_units: [{
 					amount: {
-						value:amount
+						value: amount
 					}
 				}]
 			});

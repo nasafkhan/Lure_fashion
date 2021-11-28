@@ -62,7 +62,8 @@ def place_order(request, total=0, quantity=0):
 
             convert_currency = CurrencyRates()
             converted_amount = convert_currency.convert('INR', 'USD', grand_total)
-            print("convert currency:", converted_amount)
+            amount=round(converted_amount,2)
+            print(amount)
 
             order = Order.objects.get(user=current_user, order_number=order_number)
             context = {
@@ -71,7 +72,7 @@ def place_order(request, total=0, quantity=0):
                 'total' : total,
                 'tax' : tax,
                 'grand_total' : grand_total, 
-                'converted_amount' : converted_amount
+                'amount' : amount
             }
 
             return render(request, 'user/review_order.html', context)
