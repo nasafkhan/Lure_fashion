@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-from typing import cast
 from django.contrib.messages import constants as messages
 from decouple import config
 
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     'products',
     'brands',
     'cart',
+    'orders',
 
 
     'crispy_forms',
@@ -80,7 +80,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 
                 'category.context_processors.menu_links',
-                'cart.context_processors.counter'
+                'cart.context_processors.counter',
             ],
         },
     },

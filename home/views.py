@@ -26,12 +26,11 @@ def product_detail(request, category_slug, product_slug):
     try:
         product = Product.objects.get(category__slug = category_slug, slug = product_slug)
         
-    except Exception as error:
-        raise error
+    except Product.DoesNotExist:
+        product=None
     
     context = {
         'product' : product
     }
-    print('fgf',product.get_url())
     return render(request, 'user/product_detail.html', context)
     
