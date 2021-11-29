@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.forms import SignupForm
 from accounts.models import Account
 from cart.models import Cart, CartItem
+from orders.models import Order
 from cart.views import _cart_id
 from .verification_otp import sendOTP, checkOTP
 from django.contrib.admin.views.decorators import staff_member_required
@@ -143,6 +144,27 @@ def logout(request):
         messages.success(request, 'You are logged out.')
         return redirect('sign-in')
 
+# user dashboard views
+
+@login_required(login_url = 'login')
+def dashboard(request):
+    orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
+    orders_count = orders.count()
+
+    # userprofile = UserProfile.objects.get(user_id=request.user.id)
+    context = {
+        'orders_count': orders_count,
+        # 'userprofile': userprofile,
+    }
+    return render(request, 'user/dashboard.html', context)
+
+@login_required(login_url='login')
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'user/my_orders.html', context)
 
 def admin_login(request):
     if request.user.is_authenticated:

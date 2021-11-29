@@ -10,6 +10,9 @@ urlpatterns = [
     path('verify_account/', views.verify_account, name='verify_account'),
     path('admin_login/', views.admin_login, name='admin_login'),
     path('admin_logout/', views.admin_logout, name='admin_logout'),
+
+    path('my_profile/', views.dashboard, name='my_profile'),
+    path('my_orders/', views.my_orders, name='my_orders'),
     
     path('403_access_deneid/', views.access_denied, name='access_denied')
 ]

@@ -164,7 +164,7 @@
                   <div class="product">
                     <div class="product-cart-details">
                       <h4 class="product-title">
-                        <a href="product.html"
+                        <a href=""
                           >Blue utility pinafore denim dress</a
                         >
                       </h4>
@@ -177,7 +177,7 @@
                     <!-- End .product-cart-details -->
 
                     <figure class="product-image-container">
-                      <a href="product.html" class="product-image">
+                      <a href="" class="product-image">
                         <img
                           src="assets/images/products/cart/product-2.jpg"
                           alt="product"
@@ -231,7 +231,7 @@
                   <div class="product">
                     <div class="product-cart-details">
                       <h4 class="product-title">
-                        <a href="product.html"
+                        <a href=""
                           >Beige knitted elastic runner shoes</a
                         >
                       </h4>
@@ -244,7 +244,7 @@
                     <!-- End .product-cart-details -->
 
                     <figure class="product-image-container">
-                      <a href="product.html" class="product-image">
+                      <a href="" class="product-image">
                         <img
                           src="{% static 'images/products/cart/product-1.jpg' %}"
                           alt="product"
@@ -296,8 +296,8 @@
                 <!-- End .dropdown-cart-total -->
 
                 <div class="dropdown-cart-action">
-                  <a href="cart.html" class="btn btn-primary">View Cart</a>
-                  <a href="checkout.html" class="btn btn-outline-primary-2"
+                  <a href="{% url 'cart' %}" class="btn btn-primary">View Cart</a>
+                  <a href="" class="btn btn-outline-primary-2"
                     ><span>Checkout</span><i class="icon-long-arrow-right"></i
                   ></a>8000
                 </div>
@@ -328,6 +328,7 @@
                 <ul>
                   {% if request.user.is_authenticated %}
                   <li>{{request.user.username}}</li>
+                  <li><a href="{% url 'my_profile' %}">My Profile</a></li>
                   <li><a href="{% url 'logout' %}">Logout</a></li>
                   {% else %}
                   <li><a href="{% url 'sign-in' %}">Sign In</a></li>
