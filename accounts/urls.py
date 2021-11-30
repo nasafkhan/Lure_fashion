@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('my_profile/', views.dashboard, name='my_profile'),
     path('my_orders/', views.my_orders, name='my_orders'),
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
     
     path('403_access_deneid/', views.access_denied, name='access_denied')
 ]

@@ -20,8 +20,10 @@
 							    	<form action="{% url 'sign-up' %}" method="POST" id="myForm">
 										{% csrf_token %}
 
+										
+
 										<div class="form-group">
-							    			<label class="text-dark" for="">User name *</label>
+							    			<label class="text-dark" for="">User Name *</label>
 							    			{{form.username}}
 							    		</div><!-- End .form-group -->
 

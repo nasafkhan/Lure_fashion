@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
-from accounts.forms import SignupForm
-from accounts.models import Account
+from accounts.forms import SignupForm, UserForm, UserProfileForm
+from accounts.models import Account, UserProfile
 from cart.models import Cart, CartItem
 from orders.models import Order
 from cart.views import _cart_id
@@ -130,7 +130,15 @@ def verify_account(request):
         if verified:
             user = Account.objects.create_user(username = username, phone=phone, email=email, password=password )
             user.save()
-            del request.session['username']
+
+            # Create a user profile
+            profile = UserProfile()
+            profile.user_id = user.id
+            profile.phone = phone
+            profile.profile_picture = 'default/default_avatar.png'
+            profile.save()
+
+            del request.session['username'] 
             del request.session['phone']
             del request.session['email']
             del request.session['password']
@@ -146,7 +154,7 @@ def logout(request):
 
 # user dashboard views
 
-@login_required(login_url = 'login')
+@login_required(login_url ='sign-in')
 def dashboard(request):
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
@@ -158,13 +166,36 @@ def dashboard(request):
     }
     return render(request, 'user/dashboard.html', context)
 
-@login_required(login_url='login')
+@login_required(login_url='sign-in')
 def my_orders(request):
     orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
     context = {
         'orders': orders,
     }
     return render(request, 'user/my_orders.html', context)
+
+@login_required(login_url='sign-in')
+def edit_profile(request):
+    userprofile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile has been updated.')
+            return redirect('edit_profile')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=userprofile)
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'userprofile': userprofile,
+    }
+    print(profile_form)
+    return render(request, 'user/edit_profile.html', context)
+
 
 def admin_login(request):
     if request.user.is_authenticated:
