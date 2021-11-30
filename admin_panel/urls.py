@@ -28,5 +28,5 @@ urlpatterns = [
 
     path('add_product_offer/', views.add_product_offer, name='add_product_offer'),
     path('add_brand_offer/', views.add_brand_offer, name='add_brand_offer'),
-    
+    path('add_category_offer/', views.add_category_offer, name='add_category_offer'),
 ]

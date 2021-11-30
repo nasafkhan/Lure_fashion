@@ -287,3 +287,19 @@ def add_brand_offer(request):
 
     return render(request, 'adminpanel/offers/add_brand_offer.html', context)
 
+
+@staff_member_required(login_url='access_denied')
+def add_category_offer(request):
+    form = CategoryOfferForm()
+    if request.method == 'POST':
+        form = CategoryOfferForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Offer added for category successfully')
+            return redirect('add_category_offer')
+    context = {
+        'form' : form
+    }
+    
+    return render(request, 'adminpanel/offers/add_category_offer.html', context)
+    
