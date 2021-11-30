@@ -88,11 +88,12 @@ def place_order(request, total=0, quantity=0):
     tax = 0
 
     for cart_item in cart_items:
-        total += (cart_item.product.price * cart_item.quantity)
+        offerprice = cart_item.product.get_price()
         quantity += cart_item.quantity
+        total += round((offerprice['price'] * cart_item.quantity))
 
-    tax = (18 * total) / 100
-    grand_total = total + tax
+    tax = round((18 * total) / 100)
+    grand_total = round(total + tax)
 
     if request.method == 'POST':
         form = OrderForm(request.POST)

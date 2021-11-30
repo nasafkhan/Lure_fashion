@@ -1,3 +1,4 @@
+from django import forms
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from brands.models import Brand
@@ -7,6 +8,7 @@ from category.forms import CategoryForm, EditCategory
 from products.models import Product, Variation
 from products.forms import EditProduct, EditVariant, ProductForm, VariantForm
 from accounts.models import Account
+from offer.forms import CategoryOfferForm, ProductOfferForm
 from django.contrib.admin.views.decorators import staff_member_required
 
 
@@ -251,3 +253,20 @@ def delete_category(request, category_id):
     Category.objects.filter(id=category_id).delete()
     return redirect('all_categories')
 
+
+
+@staff_member_required(login_url='access_denied')
+def add_product_offer(request):
+    form = ProductOfferForm()
+    if request.method == 'POST':
+        form = ProductOfferForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Offer added for product successfully')
+            return redirect('add_product_offer')
+    
+    context = {
+        'form' : form
+    }
+
+    return render(request, 'adminpanel/offers/add_product_offer.html', context)

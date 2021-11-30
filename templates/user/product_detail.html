@@ -62,8 +62,10 @@
                                 </div><!-- End .rating-container -->
 
                                 <div class="product-price">
-                                    <span class="new-price">&#8377; {{product.price}}</span>
-                                    <!-- <span class="old-price">$80.00</span> -->
+                                    {% if product.get_price.discount %}
+                                    <span class="new-price">&#8377; {{product.get_price.price}}</span>
+                                    <span class="old-price">{{product.price}}</span>
+                                    {% endif %}
                                 </div><!-- End .product-price -->
 
                                 <div class="product-content">

@@ -1,0 +1,29 @@
+{% extends 'adminpanel/base.html' %}
+
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% block content %}
+<!-- Start Content-->
+
+<div class="card mx-auto mt-4" style="max-width:700px;">
+    <article class="card-body">
+        <div class="container col-10">
+            <div class="container-fluid text-center ">
+                <h4 class="ml-5 mt-3 mb-3 text-black">ADD PRODUCT OFFER</h4>
+            </div>
+            {% include 'includes/messages.html' %}
+            <form action="{% url 'add_product_offer' %}" method="post" >
+                {% csrf_token %}
+                {{ form | crispy }}
+                <div class="form-group">
+					
+					<button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;"
+						type="submit">Add</button>
+				</div>
+            </form>
+        </div>
+    </article>
+</div>
+
+
+{% endblock %}

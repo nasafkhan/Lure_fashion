@@ -151,13 +151,21 @@ Checkout{% endblock %} {% block content %}
                         </div>
                         <!-- End .product -->
                       </td>
+                      {% if cart_item.product.get_price.discount %}
+                      <td class="price-col p-3">
+                        &#8377; {{cart_item.product.get_price.price}}
+                      </td>
+                      {% else %}
                       <td class="price-col p-3">
                         &#8377; {{cart_item.product.price}}
                       </td>
+                      {% endif %}
                       <td class="quantity-col p-3">{{cart_item.quantity}}</td>
-                      <td class="total-col p-3">
-                        &#8377; {{ cart_item.sub_total }}
-                      </td>
+                      {% if cart_item.product.get_price.discount %}
+                      <td class="price-col">&#8377; {{ total }}</td>
+                      {% else %}
+                      <td class="total-col">&#8377;  {{ cart_item.sub_total }}</td>
+                      {% endif %}
                     </tr>
                     {% endfor %}
                     <tr class="total-col">

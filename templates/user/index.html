@@ -152,7 +152,9 @@
                                 <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
-                                            <span class="product-label label-circle label-sale">Sale</span>
+                                            {% if product.get_price.discount %}
+                                            <span class="product-label label-circle label-sale">{{ product.get_price.discount }}% <br> OFF</span>
+                                            {% endif %}
                                             <a href="{{product.get_url}}">
                                                 <img src="{{ product.image1.url }}" alt="Product image" class="product-image">
                                                 <img src="{{ product.image1.url }}" alt="Product image" class="product-image-hover">
@@ -171,8 +173,12 @@
                                         <div class="product-body">
                                             <h3 class="product-title"><a href="{{product.get_url}}">{{ product.product_name}}</a></h3><!-- End .product-title -->
                                             <div class="product-price">
-                                                <span class="new-price">&#8377; {{ product.price }}</span>
+                                                {% if product.get_price.discount %}
+                                                <span class="new-price">&#8377; {{ product.get_price.price}}</span>
                                                 <span class="old-price">&#8377; {{ product.price }}</span>
+                                                {% else %}
+                                                <span class="new-price">&#8377; {{ product.price}}</span>
+                                                {% endif %}
                                             </div><!-- End .product-price -->
                                             <div class="ratings-container">
                                                 <div class="ratings">

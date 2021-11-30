@@ -59,10 +59,17 @@ Checkout{% endblock %} {% block content %}
                   </td>
                   <td>
                     <div class="price-wrap">
+                      {% if cart_item.product.get_price.discount %}
+                      <var class="price">&#8377; {{ total }}</var>
+                      <small class="text-muted"
+                        >&#8377; {{ cart_item.product.get_price.discount }} each
+                      </small>
+                      {% else %}
                       <var class="price">&#8377; {{ cart_item.sub_total }}</var>
                       <small class="text-muted"
                         >&#8377; {{ cart_item.product.price }} each
                       </small>
+                      {% endif %}
                     </div>
                     <!-- price-wrap .// -->
                   </td>
