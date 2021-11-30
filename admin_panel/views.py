@@ -8,7 +8,7 @@ from category.forms import CategoryForm, EditCategory
 from products.models import Product, Variation
 from products.forms import EditProduct, EditVariant, ProductForm, VariantForm
 from accounts.models import Account
-from offer.forms import CategoryOfferForm, ProductOfferForm
+from offer.forms import CategoryOfferForm, ProductOfferForm, BrandOfferForm
 from django.contrib.admin.views.decorators import staff_member_required
 
 
@@ -270,3 +270,20 @@ def add_product_offer(request):
     }
 
     return render(request, 'adminpanel/offers/add_product_offer.html', context)
+
+
+@staff_member_required(login_url='access_denied')
+def add_brand_offer(request):
+    form = BrandOfferForm()
+    if request.method == 'POST':
+        form = BrandOfferForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Offer added for brand successfully')
+            return redirect('add_brand_offer')
+    context = {
+        'form' : form
+    }
+
+    return render(request, 'adminpanel/offers/add_brand_offer.html', context)
+

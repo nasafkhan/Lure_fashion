@@ -27,4 +27,6 @@ urlpatterns = [
     path('edit_category/<category_id>', views.edit_category, name='edit_category'),
 
     path('add_product_offer/', views.add_product_offer, name='add_product_offer'),
+    path('add_brand_offer/', views.add_brand_offer, name='add_brand_offer'),
+    
 ]

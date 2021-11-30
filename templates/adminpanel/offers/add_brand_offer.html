@@ -9,10 +9,10 @@
     <article class="card-body">
         <div class="container col-10">
             <div class="container-fluid text-center ">
-                <h4 class="ml-5 mt-3 mb-3 text-black">ADD OFFER for PRODUCT</h4>
+                <h4 class="ml-5 mt-3 mb-3 text-black">ADD OFFER FOR BRAND</h4>
             </div>
             {% include 'includes/messages.html' %}
-            <form action="{% url 'add_product_offer' %}" method="post" >
+            <form action="{% url 'add_brand_offer' %}" method="post" >
                 {% csrf_token %}
                 {{ form | crispy }}
                 <div class="form-group">
