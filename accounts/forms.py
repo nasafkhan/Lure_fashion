@@ -1,5 +1,5 @@
 from django import forms
-from .models import Account, UserProfile
+from .models import Account, Address, UserProfile
 
 class SignupForm(forms.ModelForm):
     password = forms.CharField(label='Password', required=True, widget=forms.PasswordInput(attrs = {'placeholder' : 'Enter Password', 'class' : 'form-control'}))
@@ -50,3 +50,9 @@ class UserProfileForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
 
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model= Address
+        fields = ['first_name', 'last_name', 'company_name', 'phone','email',
+                  'address_line1', 'address_line2', 'landmark', 'city', 'state', 'postcode',]

@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
-from accounts.forms import SignupForm, UserForm, UserProfileForm
-from accounts.models import Account, UserProfile
+from accounts.forms import AddressForm, SignupForm, UserForm, UserProfileForm
+from accounts.models import Account, UserProfile, Address
 from cart.models import Cart, CartItem
 from orders.models import Order, OrderProduct
 from cart.views import _cart_id
 from .verification_otp import sendOTP, checkOTP
 from django.contrib.admin.views.decorators import staff_member_required
+
 from twilio.base.exceptions import TwilioRestException
 import requests
 
@@ -239,6 +240,52 @@ def change_password(request):
             messages.error(request, 'Password does not match!')
             return redirect('change_password')
     return render(request, 'user/change_password.html')
+
+@login_required(login_url='sign-in')
+def my_address(request):
+    form = AddressForm()
+    addresses = Address.objects.filter(user=request.user)
+
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        print(request.POST)
+        if form.is_valid():
+            
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            messages.success(request, 'Successfuly added new address')
+            return redirect('my_address')
+
+    context = {
+        'form' : form,
+        'addresses' : addresses
+    }
+    return render(request, 'user/my_address.html', context)
+
+@login_required(login_url='sign-in')
+def edit_address(request, pk):
+    address = Address.objects.get(pk=pk)
+    form = AddressForm(instance=address)
+
+    if request.method == 'POST':
+        form = AddressForm(request.POST, instance=address)
+
+        if form.is_valid:
+            form.save()
+            messages.success(request, 'Your Address is updated successfully')
+            return redirect('my_address')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'user/edit_address.html', context)
+
+@login_required(login_url='sign-in')
+def delete_address(request, pk):
+    Address.objects.get(id=pk).delete()
+    messages.success(request, 'Adrress deleted successfully')
+    return redirect('my_address')
 
 
 @login_required(login_url='login')

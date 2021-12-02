@@ -3,6 +3,16 @@ from accounts.models import Account
 from products.models import Product, Variation
 # Create your models here.
 
+
+STATUS = (
+    ('New', 'New'),
+    ('Order confirmed', 'Order confirmed'),
+    ('Shipped', 'Shipped'),
+    ('Out for Delivery', 'Out of Delivery'),
+    ('Delivered', 'Delivered'),
+    ('Canceled', 'Canceled')
+)
+
 class Payment(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     payment_id = models.CharField(max_length=100)
@@ -54,7 +64,7 @@ class Order(models.Model):
 
     def __str__(self):
         return self.first_name
-    
+            
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -63,7 +73,10 @@ class OrderProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     variations = models.ManyToManyField(Variation, blank=True)
     quantity = models.IntegerField()
+    status = models.CharField(max_length=50, choices=STATUS, default='New')
+    tracking_id = models.CharField(max_length=50, null=True, unique=True, editable=False)
     product_price = models.FloatField()
+    discount = models.FloatField(default=0)
     ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

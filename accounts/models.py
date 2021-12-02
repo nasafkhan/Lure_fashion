@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db.models.base import Model
+from django.db.models.deletion import CASCADE
 # Create your models here.
 
 class MyAccountManager(BaseUserManager):
@@ -79,3 +81,28 @@ class UserProfile(models.Model):
 
     def full_address(self):
         return f'{self.address_line_1} {self.address_line_2}'
+
+class Address(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=15)
+    email = models.EmailField(max_length=100) 
+    address_line1 = models.CharField(max_length=250)
+    address_line2 = models.CharField(max_length=250, blank=True)
+    landmark = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    postcode = models.IntegerField()
+    type = models.CharField(max_length=50, verbose_name='Address Type', help_text='Example:- Home, Office, etc',null=True)
+    default = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.first_name
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def full_address(self):
+        return f'{self.address_line1} {self.address_line2}'

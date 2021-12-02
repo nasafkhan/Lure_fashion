@@ -1,4 +1,3 @@
-from django import forms
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from brands.models import Brand
@@ -8,8 +7,10 @@ from category.forms import CategoryForm, EditCategory
 from products.models import Product, Variation
 from products.forms import EditProduct, EditVariant, ProductForm, VariantForm
 from accounts.models import Account
+from orders.models import OrderProduct, STATUS
 from offer.forms import CategoryOfferForm, ProductOfferForm, BrandOfferForm
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -254,7 +255,6 @@ def delete_category(request, category_id):
     return redirect('all_categories')
 
 
-
 @staff_member_required(login_url='access_denied')
 def add_product_offer(request):
     form = ProductOfferForm()
@@ -303,3 +303,31 @@ def add_category_offer(request):
     
     return render(request, 'adminpanel/offers/add_category_offer.html', context)
     
+
+@staff_member_required(login_url='access_denied')
+def active_orders(request):
+    list_exclude = ['Delivered', 'Canceled']
+    active_orders = OrderProduct.objects.all().exclude(status__in=list_exclude)
+    status = STATUS
+    context = {
+        'active_orders': active_orders,
+        'status': status,
+    }
+    return render(request, 'adminpanel/orders/active_orders.html', context)
+
+
+
+@staff_member_required(login_url='access_denied')
+def update_order_status(request, pk):
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        order_product = OrderProduct.objects.get(pk=pk)
+
+        if status == 'Canceled':
+            variant = order_product.variant
+            variant.stock += order_product.quantity
+            variant.save()
+
+        order_product.status = status
+        order_product.save()
+        return JsonResponse({'message': status})

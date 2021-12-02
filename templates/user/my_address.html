@@ -1,0 +1,137 @@
+{% extends 'user/base.html' %} {% block content %}
+{% load crispy_forms_tags %} 
+{% load crispy_forms_filters %} 
+
+<section class="section-conten padding-y bg">
+  {% include 'includes/messages.html' %}
+
+  <div class="container">
+    <div class="row">
+      {% include 'includes/dashboard_sidebar.html' %}
+
+      <main class="col-md-9">
+        <div class="card shadow p-4 bg-white rounded">
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for address in addresses %}
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row">
+                    <h5 class="mt-3 ml-3">Address</h5>
+                    <h6
+                      class="mt-3 ml-auto mr-3"
+                      style="border: 1px solid gray; padding: 6px"
+                    >
+                      {{address.type}}
+                    </h6>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title mb-0">{{address.full_name}}</h5>
+                  <p class="mb-0">{{address.full_address}},</p>
+                  <p class="mb-0">{{address.landmark}},</p>
+                  <p class="mb-0">{{address.email}},</p>
+                  <p class="mb-0">{{address.phone}},</p>
+                  <div class="row ml-0">
+                    <p class="mb-0">{{address.city}}</p><span>, </span>
+                  <p class="mb-0">{{address.state}} - </p>
+                  <p class="mb-0">{{address.postcode}}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-around">
+                  <!-- {% if not address.default %}
+                  <a href="" class="text-dark">Set As Default</a>
+                  {% else %}
+                  <a>Default</a>
+                  {% endif %} -->
+                  <a href="{% url 'edit_address' address.id %}" class="btn btn-success">Edit</a>
+                  <a href="{% url 'delete_address' address.id %}" class="btn btn-danger" onclick="deleteItems(event)"
+                    >Delete</a
+                  >
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <article class="card shadow p-3 bg-white rounded mt-2">
+          <header class="card-header">
+            <h5 class="d-inline-block mr-3">Add Address</h5>
+          </header>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <form action="" method="POST">
+                  {% csrf_token %}
+
+                  <div class="form-row">
+                    <div class="col form-group">
+                      <div class="form-group">{{form.first_name | as_crispy_field }}</div>
+                    </div>
+                    <div class="col form-group">
+                      <div class="form-group">{{form.last_name | as_crispy_field }}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="col form-group">
+                      <div class="form-group">{{form.phone | as_crispy_field }}</div>
+                    </div>
+                    <div class="col form-group">
+                      <div class="form-group">{{form.email | as_crispy_field }}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-row"> 
+                    <div class="col form-group">
+                      <div class="form-group">{{form.address_line1 | as_crispy_field }}</div>
+                    </div>
+                    <div class="col form-group">
+                      <div class="form-group">{{form.address_line2 | as_crispy_field }}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="col form-group">
+                      <div class="form-group">{{form.landmark | as_crispy_field }}</div>
+                    </div>
+                    <div class="col form-group">
+                      <div class="form-group">{{form.city | as_crispy_field }}</div>
+                    </div>
+
+                    <div class="col form-group">
+                      <div class="form-group">{{form.state | as_crispy_field }}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="col form-group">
+                      <div class="form-group">{{form.postcode | as_crispy_field }}</div>
+                    </div>
+                    <div class="col form-group">
+                      <div class="form-group">{{form.type}}</div>
+                    </div>
+                  </div>
+
+                  <input
+                    type="submit"
+                    value="Add New Address"
+                    class="btn btn-outline-primary"
+                   
+                  />
+                </form>
+              </div>
+            </div>
+            <!-- row.// -->
+          </div>
+          <!-- card-body .// -->
+        </article>
+        <!-- order-group.// -->
+      </main>
+    </div>
+    <!-- row.// -->
+  </div>
+</section>
+
+{% endblock %}
