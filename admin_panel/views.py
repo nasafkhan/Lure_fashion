@@ -20,12 +20,28 @@ def dashboard(request):
 
 @staff_member_required(login_url='access_denied')
 def active_users(request):
-    users   = Account.objects.all()
+    users   = Account.objects.all().order_by('id')
 
     context = {
         'users' : users
     }
     return render(request, 'adminpanel/user_management/active_users.html', context)
+
+
+@staff_member_required(login_url='access_denied')
+def block_user(request, pk):
+    user = Account.objects.get(id = pk)
+    user.is_active = False
+    user.save()
+    return redirect('active_users')
+
+@staff_member_required(login_url='access_denied')
+def unblock_user(request, pk):
+    user = Account.objects.get(id = pk)
+    user.is_active = True
+    user.save()
+    return redirect('active_users')
+
 
 @staff_member_required(login_url='access_denied')
 def all_products(request):

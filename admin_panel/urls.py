@@ -7,6 +7,8 @@ urlpatterns = [
 
     #Users
     path('active_users/', views.active_users, name='active_users'),
+    path('block_user/<int:pk>/', views.block_user, name='block_user'),
+    path('unblock_user/<int:pk>/', views.unblock_user, name='unblock_user'),
 
 
     #Products

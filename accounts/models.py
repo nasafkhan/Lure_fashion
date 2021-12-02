@@ -95,7 +95,7 @@ class Address(models.Model):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     postcode = models.IntegerField()
-    type = models.CharField(max_length=50, verbose_name='Address Type', help_text='Example:- Home, Office, etc',null=True)
+    type = models.CharField(max_length=50, verbose_name='Address Type', help_text='Example:- Home, Office, etc', default='Home')
     default = models.BooleanField(default=False)
 
     def __str__(self):
